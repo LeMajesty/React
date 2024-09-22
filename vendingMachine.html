@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: lightblue;
+        }
+
+        #app {
+            margin: 50px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        a:hover {
+            color: darkblue;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Vending machine content will go here -->
+    </div>
+
+    <script>
+        // Function to display the main vending machine with snacks
+        function displayVendingMachine() {
+            const app = document.getElementById("app");
+            app.innerHTML = `
+                <h1>Welcome to the Vending Machine!</h1>
+                <ul>
+                    <li><a onclick="displaySnack('Chips')">Snack 1</a></li>
+                    <li><a onclick="displaySnack('Soda')">Snack 2</a></li>
+                    <li><a onclick="displaySnack('Candy')">Snack 3</a></li>
+                </ul>
+            `;
+        }
+
+        // Function to display a specific snack
+        function displaySnack(snackName) {
+            const app = document.getElementById("app");
+            app.innerHTML = `
+                <h1>${snackName}</h1>
+                <p>This is ${snackName}!</p>
+                <button onclick="displayVendingMachine()">Go Back to Vending Machine</button>
+            `;
+        }
+
+        // Initialize the vending machine when the page loads
+        window.onload = function() {
+            displayVendingMachine();
+        };
+    </script>
+</body>
+</html>
