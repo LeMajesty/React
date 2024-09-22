@@ -1,0 +1,59 @@
+//-- src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+
+const dogs = [
+  { name: 'Whiskey', age: 5, description: 'Whiskey loves to play with toys.' },
+  { name: 'Duke', age: 3, description: 'Duke enjoys long walks in the park.' },
+  { name: 'Perry', age: 4, description: 'Perry likes to bark at strangers.' }
+];
+
+//-- Component for rendering the list of dogs (homepage)
+function DogList() {
+  return (
+    <div>
+      <h1>Our Dogs</h1>
+      <ul>
+        {dogs.map((dog) => (
+          <li key={dog.name}>
+            <Link to={`/dogs/${dog.name.toLowerCase()}`}>{dog.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+//-- Component to display information about a specific dog
+function DogDetail({ match }) {
+  const dogName = match.params.name.toLowerCase();
+  const dog = dogs.find((d) => d.name.toLowerCase() === dogName);
+
+  if (!dog) {
+    return <Redirect to="/dogs" />;
+  }
+
+  return (
+    <div>
+      <h2>{dog.name}</h2>
+      <p>Age: {dog.age}</p>
+      <p>{dog.description}</p>
+      <Link to="/dogs">Back to All Dogs</Link>
+    </div>
+  );
+}
+
+//-- Main App component with routes
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/dogs" component={DogList} />
+        <Route path="/dogs/:name" component={DogDetail} />
+        <Redirect to="/dogs" />
+      </Switch>
+    </Router>
+  );
+}
+
+export default App;
