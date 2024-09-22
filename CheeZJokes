@@ -1,0 +1,67 @@
+import React, { useState, useEffect } from 'react';
+
+- Spinner component to show while loading jokes
+function Spinner() {
+  return <div>Loading...</div>;
+}
+
+- Functional Component for voting and fetching jokes
+function JokeVotingApp() {
+  const [jokes, setJokes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const jokeCount = 5; // Number of jokes to fetch
+
+  - Function to fetch jokes from the API
+  const fetchJokes = async () => {
+    const fetchedJokes = new Set(); // Use Set to avoid duplicates
+
+    while (fetchedJokes.size < jokeCount) {
+      const response = await fetch('https://icanhazdadjoke.com/', {
+        headers: { Accept: 'application/json' }
+      });
+      const data = await response.json();
+      fetchedJokes.add({ ...data, upvotes: 0, downvotes: 0 });
+    }
+
+    setJokes([...fetchedJokes]);
+    setLoading(false);
+  };
+
+  - Fetch jokes when component mounts
+  useEffect(() => {
+    fetchJokes();
+  }, []);
+
+  - Function to vote on jokes
+  const handleVote = (id, delta) => {
+    setJokes((prevJokes) =>
+      prevJokes.map((joke) =>
+        joke.id === id
+          ? { ...joke, upvotes: joke.upvotes + (delta > 0 ? 1 : 0), downvotes: joke.downvotes + (delta < 0 ? 1 : 0) }
+          : joke
+      )
+    );
+  };
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  return (
+    <div>
+      <h1>Cheesy Jokes</h1>
+      <ul>
+        {jokes.map((joke) => (
+          <li key={joke.id}>
+            <p>{joke.joke}</p>
+            <button onClick={() => handleVote(joke.id, 1)}>Vote Up</button>
+            <button onClick={() => handleVote(joke.id, -1)}>Vote Down</button>
+            <p>Score: {joke.upvotes - joke.downvotes}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default JokeVotingApp;
