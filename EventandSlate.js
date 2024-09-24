@@ -55,28 +55,16 @@ const defaultColors = [
   "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Yellow", "YellowGreen",
 ];
 
-/** Container for set of colored boxes.
- *
- * Props:
- * - numBoxes: # of boxes to manage
- * - allColors: array of random colors to choose
- *
- * State:
- * - boxes: array of box color strings
- */
 
 function BoxesContainer({ allColors = defaultColors, numBoxes = 16 }) {
-  // note: passes function, so this can be only called once at start
   const [boxes, setBoxes] = useState(getInitialRandomColors);
 
-  /** Return array of random colors. */
   function getInitialRandomColors() {
     return Array.from(
         { length: numBoxes },
         () => choice(allColors));
   }
 
-  /** On button click: pick random box, change to random color. */
   function handleClick(evt) {
     setBoxes(boxes => {
       let idx = randInt(numBoxes);
