@@ -37,3 +37,33 @@ function PokemonCard({ pokemon }) {
 export default PokemonCard;
 
 
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export function useAxios(url) {
+  const [data, setData] = useState([]);
+
+
+  const addData = (newData) => {
+    setData(prevData => [...prevData, newData]);
+  };
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        response.data.forEach(item => addData(item)); // Add each item from the response to the state
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [url]); // Effect runs when URL changes
+
+  return [data, addData];
+}
+
+
+
