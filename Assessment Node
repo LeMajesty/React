@@ -1,0 +1,51 @@
+function timeToWords(time) {
+
+    const [hours, minutes] = time.split(':').map(Number);
+    
+  
+    const hourWords = [
+        "twelve", "one", "two", "three", "four", "five", 
+        "six", "seven", "eight", "nine", "ten", "eleven"
+    ];
+    
+    const minuteWords = [
+        "", "one", "two", "three", "four", "five", 
+        "six", "seven", "eight", "nine", "ten", 
+        "eleven", "twelve", "thirteen", "fourteen", 
+        "fifteen", "sixteen", "seventeen", "eighteen", 
+        "nineteen", "twenty", "twenty-one", "twenty-two", 
+        "twenty-three", "twenty-four", "twenty-five", 
+        "twenty-six", "twenty-seven", "twenty-eight", 
+        "twenty-nine", "thirty", "thirty-one", "thirty-two", 
+        "thirty-three", "thirty-four", "thirty-five", 
+        "thirty-six", "thirty-seven", "thirty-eight", 
+        "thirty-nine", "forty", "forty-one", "forty-two", 
+        "forty-three", "forty-four", "forty-five", 
+        "forty-six", "forty-seven", "forty-eight", 
+        "forty-nine", "fifty", "fifty-one", "fifty-two", 
+        "fifty-three", "fifty-four", "fifty-five", 
+        "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine"
+    ];
+  
+    const period = hours < 12 ? "am" : "pm";
+    
+  
+    const adjustedHours = hours % 12;
+    
+  
+    const hourWord = hourWords[adjustedHours];
+    const minuteWord = minuteWords[minutes];
+    
+    
+    return `${hourWord} ${minuteWord} ${period}`.trim();
+}
+
+console.log(timeToWords("14:30")); // Output: "two thirty pm"
+console.log(timeToWords("09:05")); // Output: "nine five am"
+console.log(timeToWords("00:00")); // Output: "twelve zero am"
+console.log(timeToWords("12:15")); // Output: "twelve fifteen pm"
+
+module.exports = app is written twice. This is unnecessary and could be cleaned up
+Log the error for handling.
+Middleware needs to be in order before my route handlers.
+
