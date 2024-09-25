@@ -1,0 +1,39 @@
+
+import { useState } from 'react';
+
+export function useFlip() {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const toggleFlip = () => {
+    setIsFlipped(prevFlipped => !prevFlipped);
+  };
+
+  return [isFlipped, toggleFlip];
+}
+
+import React from 'react';
+import { useFlip } from './hooks';
+
+function PokemonCard({ pokemon }) {
+  const [isFlipped, toggleFlip] = useFlip();
+
+  return (
+    <div onClick={toggleFlip} className={`card ${isFlipped ? 'flipped' : ''}`}>
+      {isFlipped ? (
+        <div className="card-back">
+          {/* Render back side with additional info */}
+          <p>{pokemon.name}</p>
+        </div>
+      ) : (
+        <div className="card-front">
+          {/* Render front side */}
+          <img src={pokemon.image} alt={pokemon.name} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default PokemonCard;
+
+
